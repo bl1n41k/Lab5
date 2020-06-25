@@ -1,0 +1,10 @@
+D:\4 семестр\ООП\Lab5\Lab5\bin\Debug\Lab5.exe.config
+D:\4 семестр\ООП\Lab5\Lab5\bin\Debug\Lab5.exe
+D:\4 семестр\ООП\Lab5\Lab5\bin\Debug\Lab5.pdb
+D:\4 семестр\ООП\Lab5\Lab5\obj\Debug\Lab5.csprojAssemblyReference.cache
+D:\4 семестр\ООП\Lab5\Lab5\obj\Debug\Lab5.Form1.resources
+D:\4 семестр\ООП\Lab5\Lab5\obj\Debug\Lab5.Properties.Resources.resources
+D:\4 семестр\ООП\Lab5\Lab5\obj\Debug\Lab5.csproj.GenerateResource.cache
+D:\4 семестр\ООП\Lab5\Lab5\obj\Debug\Lab5.csproj.CoreCompileInputs.cache
+D:\4 семестр\ООП\Lab5\Lab5\obj\Debug\Lab5.exe
+D:\4 семестр\ООП\Lab5\Lab5\obj\Debug\Lab5.pdb
