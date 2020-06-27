@@ -9,7 +9,8 @@ namespace Lab5
     enum direction : byte { Up, Right, Down, Left };
     public partial class Form1 : Form
     {
-        int AlgStep;
+        int AlgStep, x, y;
+        bool newImage = false;
         Cockroach cockroachStyle;
         Cockroach workCockroach;//рабочий Таракан - активный Таракан, который будет выполнять алгоритм
         PictureBox workpb;//рабочее поле PictureBox - поле на котрой будет рабочий Таракан
@@ -28,14 +29,25 @@ namespace Lab5
         }
         public void RePaint(Cockroach c, PictureBox p)
         {
-            p.Bounds = new Rectangle(c.X, c.Y, c.Image.Width, c.Image.Height);//создание новых границ изображения для PictureBox
+            if (newImage == false)
+            {
+                c.X = x;
+                c.Y = y;
+                p.Bounds = new Rectangle(x, y, c.Image.Width, c.Image.Height);//создание новых границ изображения для PictureBox
+               
+            }
+            p.Bounds = new Rectangle(c.X, c.Y, c.Image.Width, c.Image.Height);
+            
             p.Image = c.Image;
         }
+
         public void Show(Cockroach c, PictureBox p, Panel owner)
         {
+            newImage = true;
             RePaint(c, p);
-            owner.Controls.Add(p);// добавляем PictureBox к элементу Panel
+            owner.Controls.Add(p);//добавляем PictureBox к элементу Panel
         }
+
         private void IMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -44,9 +56,8 @@ namespace Lab5
                 {
                     ClearWorkItems();
                 }
-
                 int k = PB.IndexOf(sender as PictureBox);//запоминаем номер нажатого компонента PictureBox
-                workpb = sender as PictureBox;//объявляем его рабочим
+                workpb = sender as PictureBox;//объявляем его рабочим  
                 workCockroach = LC[k];//по найденному номеру находим Таракана в списке
                 if (!workP.Any())
                 {
@@ -59,33 +70,41 @@ namespace Lab5
                     workP.Add(workpb);
                 }
             }
-            else
-            if (e.Button == MouseButtons.Right) //Смена образа на пкм
+            else if (e.Button == MouseButtons.Right)//cмена образа таракана нажатием ПКМ
             {
                 ClearWorkItems();
                 int k = PB.IndexOf(sender as PictureBox);
                 workpb = sender as PictureBox;
-                if ((LC[k].Image.Tag).ToString() == "1")
+               
+                if ((LC[k].Image.Tag).ToString() == "2")
                 {
-                    LC[k] = new Cockroach(new Bitmap("Cockroach2.png"));
-                    LC[k].Image.Tag = "2";
+                    x = workpb.Location.X;
+                    y = workpb.Location.Y;
+                    LC[k] = new Cockroach(new Bitmap("Cockroach1.png"));
+                    LC[k].Image.Tag = "1";
+                    workpb.Location = new Point(x, y);
                 }
                 else
                 {
-                    LC[k] = new Cockroach(new Bitmap("Cockroach1.png"));
-                    LC[k].Image.Tag = "1";
+                    x = workpb.Location.X;
+                    y = workpb.Location.Y;
+                    LC[k] = new Cockroach(new Bitmap("Cockroach2.png"));
+                    LC[k].Image.Tag = "2";
+                    workpb.Location = new Point(x, y);
                 }
+                newImage = false;
                 workP.Add(workpb);
                 workС.Add(LC[k]);
                 RePaint(LC[k], PB[k]);
             }
         }
+
         private void IMouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 PictureBox picture = sender as PictureBox;
-                picture.Tag = new Point(picture.Location.X + e.X + 1, picture.Location.Y + e.Y + 1);//запоминаем координаты мыши на момент начала перетаскивания
+                picture.Tag = new Point(picture.Location.X , picture.Location.Y );//запоминаем координаты мыши на момент начала перетаскивания
                 picture.DoDragDrop(sender, DragDropEffects.Move);//начинаем перетаскивание ЧЕГО и с КАКИМ ЭФФЕКТОМ
             }
         }
@@ -186,6 +205,7 @@ namespace Lab5
                         workС[i].ChangeTrend(s);
                     if (s == "Down")
                         workС[i].ChangeTrend(s);
+                    newImage = true;
                     RePaint(workС[i], workP[i]);
                 }
                 AlgStep++;

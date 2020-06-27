@@ -13,7 +13,6 @@ namespace Lab5
     public class Cockroach
     {
         public Bitmap image;
-        const int step = 30;
         int x;
         int y;
         IDirection direction;
